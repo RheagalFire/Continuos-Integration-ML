@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
-      - uses: iterative/setup-cml@v1
+      - uses: iterative/setup-cml@v2.0.1
       - name: cml_run
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
@@ -19,7 +19,7 @@ jobs:
           cat metrics.txt >> report.md
           
           echo "## Data viz" >> report.md
-          cml-publish feature_importance.png --md >> report.md
-          cml-publish residuals.png --md >> report.md
+          echo '![](./feature_importance.png "feature importance")' --md >> report.md
+          echo '![](./residuals.png "feature importance")' --md >> report.md
           
-          cml-send-comment report.md
+          cml comment create report.md
